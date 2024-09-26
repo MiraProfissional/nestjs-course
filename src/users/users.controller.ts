@@ -5,11 +5,8 @@ import {
   Param,
   Query,
   Body,
-  Headers,
-  Ip,
   ParseIntPipe,
   DefaultValuePipe,
-  ValidationPipe,
 } from '@nestjs/common';
 import { CreateUserDTO } from './dtos/create-user.dto';
 
@@ -27,7 +24,7 @@ export class UsersController {
   }
 
   @Post()
-  public createUsers(@Body(new ValidationPipe()) createUserDto: CreateUserDTO) {
+  public createUsers(@Body() createUserDto: CreateUserDTO) {
     console.log(createUserDto);
     return 'You sent a POST request to users endpoint';
   }
