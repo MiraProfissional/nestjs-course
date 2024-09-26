@@ -25,7 +25,7 @@ export class UsersController {
 
   @Post()
   public createUsers(@Body() createUserDto: CreateUserDTO) {
-    console.log(createUserDto);
+    console.log(createUserDto instanceof CreateUserDTO);
     return 'You sent a POST request to users endpoint';
   }
 }
