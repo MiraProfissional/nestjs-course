@@ -24,11 +24,7 @@ export class UsersController {
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
   ) {
-    console.log(getUsersParamDto);
-    console.log(limit);
-    console.log(page);
-
-    return 'You sent a GET request to users endpoint';
+    return this.usersService.findAll(getUsersParamDto, limit, page);
   }
 
   @Post()
