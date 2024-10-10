@@ -23,23 +23,19 @@ export class CreatePostDto {
   title: string;
 
   @IsNotEmpty()
-  @IsEnum(postType, {
-    message: 'Invalid post type',
-  })
+  @IsEnum(postType)
   postType: postType;
 
   @IsString()
   @IsNotEmpty()
-  @Matches(/^[a-a0-9]+(?:-[a-z0-9]+)*$/, {
+  @Matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, {
     message:
       'A slug shoud be all small letters and uses only "-" and without spaces. For example "my-url"',
   })
   slug: string;
 
   @IsNotEmpty()
-  @IsEnum(postStatus, {
-    message: 'Invalid status',
-  })
+  @IsEnum(postStatus)
   status: postStatus;
 
   @IsString()
