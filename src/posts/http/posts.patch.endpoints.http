@@ -1,0 +1,10 @@
+PATCH http://localhost:8000/posts/
+Content-Type: application/json
+
+{
+    "id": 1,
+    "title":"Test Title",
+    "postType":"post",
+    "slug":"my-url",
+    "status":"draft"
+}
