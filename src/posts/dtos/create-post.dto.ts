@@ -8,6 +8,7 @@ import {
   IsString,
   IsUrl,
   Matches,
+  MaxLength,
   MinLength,
   ValidateNested,
 } from 'class-validator';
@@ -25,6 +26,7 @@ export class CreatePostDto {
   @IsString()
   @IsNotEmpty()
   @MinLength(4)
+  @MaxLength(512)
   title: string;
 
   @ApiProperty({
