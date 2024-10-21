@@ -6,13 +6,14 @@ services:
     container_name: nestjs-app
     environment:
       - PORT=8000
-      - NODE_ENV=development
     ports:
       - '8000:8000'
     depends_on:
       - postgres_db
     volumes:
       - ./src:/usr/src/app/src
+    env_file:
+      - .env
 
   postgres_db:
     image: postgres
