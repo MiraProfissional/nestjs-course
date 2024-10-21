@@ -6,9 +6,14 @@ import { PostsModule } from './posts/posts.module';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/user.entity';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['.env.development.local'],
+    }),
     UsersModule,
     PostsModule,
     AuthModule,
@@ -24,11 +29,11 @@ import { User } from './users/user.entity';
         synchronize: true,
 
         // Postrgres options
-        port: 5432,
-        username: 'postgres',
-        password: 'root',
-        host: 'localhost',
-        database: 'nestjs-blog',
+        host: process.env.DB_HOST,
+        port: Number(process.env.DB_PORT),
+        username: process.env.DB_USERNAME,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_DATABASE,
       }),
     }),
   ],
