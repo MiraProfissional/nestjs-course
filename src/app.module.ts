@@ -24,7 +24,9 @@ import { MetaOptionsModule } from './meta-options/meta-options.module';
       useFactory: (config: ConfigService) => ({
         // Default options
         type: 'postgres',
-        entities: [User],
+
+        // entities: [User],
+        autoLoadEntities: true,
 
         // Only in development mode
         synchronize: true,
