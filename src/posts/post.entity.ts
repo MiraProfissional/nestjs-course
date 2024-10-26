@@ -74,7 +74,9 @@ export class Post {
   // Work on these in lectures on relationships
   tags?: string[];
 
-  @OneToOne(() => MetaOption, { cascade: true })
+  // cascade -> When a CRUD happens, is always related to metaOptions. For example: If I want to create an post and the metaOption that was sent to me did not exist, it will create it.
+  // eager -> Every time that you read (consult) a Post, it will bring the metaOption data
+  @OneToOne(() => MetaOption, { cascade: true, eager: true })
   @JoinColumn()
   metaOptions?: MetaOption;
 }
