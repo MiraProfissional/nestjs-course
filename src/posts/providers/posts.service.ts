@@ -39,10 +39,15 @@ export class PostsService {
   public async deletePost(id: number) {
     // Find the post (checking if exists)
     const post = await this.postsRepository.findOneBy({ id });
-    // Delete the post (First you need to delete post and then your related metaOption)
-    await this.postsRepository.delete(id);
-    // Delete the metaOption
-    await this.metaOptionsRepository.delete(post.metaOptions.id);
+
+    const inversePost = await this.metaOptionsRepository.find({
+      where: { id: post.metaOptions.id },
+      relations: {
+        post: true,
+      },
+    });
+
+    console.log(inversePost);
     // Confirmation
     return { deleted: true, id };
   }
