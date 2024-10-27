@@ -35,9 +35,13 @@ export class PostsService {
   }
 
   public async findAll(userId: string) {
-    const post = await this.postsRepository.find();
+    const posts = await this.postsRepository.find({
+      relations: {
+        metaOptions: true,
+      },
+    });
 
-    return post;
+    return posts;
   }
 
   public async deletePost(id: number) {
