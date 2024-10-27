@@ -21,16 +21,20 @@ export class PostsService {
 
   // Creating new posts
   public async createPost(@Body() createPostDto: CreatePostDto) {
+    // Find author from database based on authorId
+    const author = await this.usersService.findOneById(createPostDto.authorId);
+
     // 2) Create post
-    const post = this.postsRepository.create(createPostDto);
+    const post = this.postsRepository.create({
+      ...createPostDto,
+      author: author,
+    });
 
     // 4) Return the post
     return await this.postsRepository.save(post);
   }
 
   public async findAll(userId: string) {
-    const user = this.usersService.findOneById(userId);
-
     const post = await this.postsRepository.find();
 
     return post;
