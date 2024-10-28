@@ -1,6 +1,8 @@
 import {
   Column,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -9,6 +11,7 @@ import { postType } from './enums/postType.enum';
 import { postStatus } from './enums/postStatus.enum';
 import { MetaOption } from 'src/meta-options/meta-options.entity';
 import { User } from 'src/users/user.entity';
+import { Tag } from 'src/tags/tag.entity';
 
 @Entity()
 export class Post {
@@ -71,8 +74,9 @@ export class Post {
   })
   publishOn: Date;
 
-  // Work on these in lectures on relationships
-  tags?: string[];
+  @ManyToMany(() => Tag)
+  @JoinTable()
+  tags?: Tag[];
 
   // cascade -> When a CRUD happens, is always related to metaOptions. For example: If I want to create an post and the metaOption that was sent to me did not exist, it will create it.
   // eager -> Every time that you read (consult) a Post, it will bring the metaOption data
