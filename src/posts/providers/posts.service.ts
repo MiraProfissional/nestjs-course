@@ -1,4 +1,4 @@
-import { Body, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/providers/users.service';
 import { CreatePostDto } from '../dtos/create-post.dto';
 import { Repository } from 'typeorm';
@@ -20,7 +20,7 @@ export class PostsService {
   ) {}
 
   // Creating new posts
-  public async createPost(@Body() createPostDto: CreatePostDto) {
+  public async createPost(createPostDto: CreatePostDto) {
     // Find author from database based on authorId
     const author = await this.usersService.findOneById(createPostDto.authorId);
 
