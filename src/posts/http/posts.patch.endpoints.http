@@ -2,8 +2,10 @@ PATCH http://localhost:8000/posts/
 Content-Type: application/json
 
 {
-    "title":"Test Title",
+    "id":8,
+    "title":"Test Title with JavaScript",
     "postType":"post",
-    "slug":"my-url",
-    "status":"draft"
+    "status":"draft",
+    "content":"test content with JavaScript",
+    "tags":[1,2]
 }

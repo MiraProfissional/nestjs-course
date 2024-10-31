@@ -45,8 +45,7 @@ export class PostsController {
   })
   @Patch()
   public updatePosts(@Body() patchPostDto: PatchPostDto) {
-    console.log(patchPostDto);
-    return 'You sent a PATCH request to posts endpoint';
+    return this.postsService.updatePost(patchPostDto);
   }
 
   @Delete()
