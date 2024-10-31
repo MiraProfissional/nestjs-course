@@ -2,7 +2,7 @@ POST http://localhost:8000/tags
 Content-Type: application/json
 
 {
-    "name":"javascript",
-    "slug":"javascript",
-    "description": "All posts related to JavaScript"
+    "name":"backend",
+    "slug":"backend",
+    "description": "All posts related to Backend"
 }

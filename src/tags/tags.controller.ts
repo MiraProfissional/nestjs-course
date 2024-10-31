@@ -30,4 +30,10 @@ export class TagsController {
   public async deleteTags(@Query('id', ParseIntPipe) id: number) {
     return this.tagsService.deleteTag(id);
   }
+
+  // /tags/soft-delete
+  @Delete('soft-delete')
+  public async softDeleteTags(@Query('id', ParseIntPipe) id: number) {
+    return this.tagsService.softDeleteTag(id);
+  }
 }
