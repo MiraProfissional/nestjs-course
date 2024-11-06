@@ -8,6 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TagsModule } from './tags/tags.module';
 import { MetaOptionsModule } from './meta-options/meta-options.module';
+import { appConfig } from './config/app.config';
 
 const ENV = process.env.NODE_ENV;
 
@@ -16,6 +17,7 @@ const ENV = process.env.NODE_ENV;
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: !ENV ? '.env' : `.env.${ENV}`,
+      load: [appConfig],
     }),
     UsersModule,
     PostsModule,
@@ -28,17 +30,17 @@ const ENV = process.env.NODE_ENV;
         type: 'postgres',
 
         // entities: [User],
-        autoLoadEntities: true,
+        autoLoadEntities: configService.get('database.autoLoadEntities'),
 
         // Only in development mode
-        synchronize: true,
+        synchronize: configService.get('database.synchronize'),
 
         // Postrgres options
-        host: configService.get('DB_HOST'),
-        port: Number(configService.get('DB_PORT')),
-        username: configService.get('DB_USERNAME'),
-        password: configService.get('DB_PASSWORD'),
-        database: configService.get('DB_DATABASE'),
+        host: configService.get('database.host'),
+        port: Number(configService.get('database.port')),
+        username: configService.get('database.username'),
+        password: configService.get('database.password'),
+        database: configService.get('database.name'),
       }),
     }),
     TagsModule,
