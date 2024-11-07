@@ -1,6 +1,8 @@
 import {
   BadRequestException,
   forwardRef,
+  HttpException,
+  HttpStatus,
   Inject,
   Injectable,
   RequestTimeoutException,
@@ -13,6 +15,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDTO } from '../dtos/create-user.dto';
 import { ConfigType } from '@nestjs/config';
 import profileConfig from '../config/profile.config';
+import { error } from 'console';
 
 /** Class to connect to Users table and perform business operations */
 @Injectable()
@@ -82,16 +85,19 @@ export class UsersService {
     limit: number,
     page: number,
   ) {
-    return [
+    throw new HttpException(
       {
-        firstName: 'John',
-        email: 'john@email.com',
+        status: HttpStatus.MOVED_PERMANENTLY,
+        error: 'The API endpoint does not exist',
+        fileName: 'users.service.ts',
+        lineNumber: 88,
       },
+      HttpStatus.MOVED_PERMANENTLY,
       {
-        firstName: 'Joana',
-        email: 'joana@email.com',
+        cause: new Error(),
+        description: 'Occured because the API endpoint was permanently moved',
       },
-    ];
+    );
   }
 
   /** The method to get one specific user by your ID from the database */
