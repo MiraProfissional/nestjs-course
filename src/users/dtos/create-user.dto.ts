@@ -8,7 +8,7 @@ import {
   Matches,
 } from 'class-validator';
 
-export class CreateUserDTO {
+export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   @MinLength(3)

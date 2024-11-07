@@ -9,13 +9,12 @@ import {
 } from '@nestjs/common';
 import { GetUsersParamDto } from '../dtos/get-users-param.dto';
 import { AuthService } from 'src/auth/providers/auth.service';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { User } from '../user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserDTO } from '../dtos/create-user.dto';
+import { CreateUserDto } from '../dtos/create-user.dto';
 import { ConfigType } from '@nestjs/config';
 import profileConfig from '../config/profile.config';
-import { error } from 'console';
 
 /** Class to connect to Users table and perform business operations */
 @Injectable()
@@ -33,10 +32,13 @@ export class UsersService {
 
     @Inject(profileConfig.KEY)
     private readonly profileConfiguration: ConfigType<typeof profileConfig>,
+
+    // Injecting Datasource
+    private readonly dataSource: DataSource,2
   ) {}
 
   // Creating function for create users in the database
-  public async createUser(createUserDto: CreateUserDTO) {
+  public async createUser(createUserDto: CreateUserDto) {
     let existingUser = undefined;
 
     try {
@@ -122,5 +124,37 @@ export class UsersService {
     }
 
     return user;
+  }
+
+  public async createMany(createUsersDto: CreateUserDto[]) {
+    let newUsers: User[] = []
+
+    // 1. Create Query Runner Instance
+    const queryRunner = this.dataSource.createQueryRunner();
+
+    // 2. Connect Query Runner to datasource
+    await queryRunner.connect();
+    
+    // 3. Start Transaction
+    await queryRunner.startTransaction();
+
+    try {
+      for(let user of createUsersDto) {
+        let newUser = queryRunner.manager.create(User,user);
+        let result = await queryRunner.manager.save(newUser);
+        newUsers.push(result);
+
+        // 4.1. If successful commit
+        await queryRunner.commitTransaction();
+      }
+    } catch (error) {
+      // 4.2. If unsuccessful rollback
+        await queryRunner.rollbackTransaction();
+    } finally {
+      // 5. Release connection
+      await queryRunner.release();
+    }
+
+    return newUsers;
   }
 }
