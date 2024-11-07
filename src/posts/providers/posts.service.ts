@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  RequestTimeoutException,
+} from '@nestjs/common';
 import { UsersService } from 'src/users/providers/users.service';
 import { CreatePostDto } from '../dtos/create-post.dto';
 import { Repository } from 'typeorm';
@@ -53,10 +57,43 @@ export class PostsService {
 
   public async updatePost(patchPostDto: PatchPostDto) {
     // Find the Tags
-    const tags = await this.tagsService.findMutipleTags(patchPostDto.tags);
+    let tags = undefined;
+    const tagsLength = patchPostDto.tags.length;
+
+    try {
+      tags = await this.tagsService.findMutipleTags(patchPostDto.tags);
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Unbale to process your request at the moment, please try later.',
+        {
+          description: 'Error connecting to the database.',
+        },
+      );
+    }
+
+    if (!tags || tags.length != tagsLength) {
+      throw new BadRequestException(
+        'Please check your tag IDs and ensure they are correct',
+      );
+    }
 
     // Find the Post
-    const post = await this.postsRepository.findOneBy({ id: patchPostDto.id });
+    let post = undefined;
+
+    try {
+      post = await this.postsRepository.findOneBy({ id: patchPostDto.id });
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Unbale to process your request at the moment, please try later.',
+        {
+          description: 'Error connecting to the database.',
+        },
+      );
+    }
+
+    if (!post) {
+      throw new BadRequestException('The post ID does not exist');
+    }
 
     // Update the properties
     post.title = patchPostDto.title ?? post.title; // { ...post, ...patchPostDto } sometimes can be bad
@@ -72,7 +109,18 @@ export class PostsService {
     post.tags = tags;
 
     // Save the post
-    return await this.postsRepository.save(post);
+    try {
+      await this.postsRepository.save(post);
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Unbale to process your request at the moment, please try later.',
+        {
+          description: 'Error connecting to the database.',
+        },
+      );
+    }
+
+    return post;
   }
 
   public async deletePost(id: number) {
