@@ -10,6 +10,7 @@ import { TagsModule } from './tags/tags.module';
 import { MetaOptionsModule } from './meta-options/meta-options.module';
 import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
+import environmentValidation from './config/environment.validation';
 
 const ENV = process.env.NODE_ENV;
 
@@ -19,6 +20,11 @@ const ENV = process.env.NODE_ENV;
       isGlobal: true,
       envFilePath: !ENV ? '.env' : `.env.${ENV}`,
       load: [appConfig, databaseConfig],
+      validationSchema: environmentValidation,
+      // validationOptions: {
+      //   abortEarly: false, // Opcional: mostra todos os erros ao invés de parar no primeiro
+      //   // allowUnknown: false, // Opcional: não permite variáveis desconhecidas no .env (Tem que definir um monte de coisas...)
+      // },
     }),
     UsersModule,
     PostsModule,
