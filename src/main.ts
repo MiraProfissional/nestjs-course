@@ -11,6 +11,9 @@ async function bootstrap() {
       whitelist: true, //This ensure that if any propety doesn't exist inside our DTO, Nestjs won't carry that property inside the controller as well.
       forbidNonWhitelisted: true, // Just the whitelist (the last parameter) wipes out the unkown propety, this parameter makes sure that Nestjs throw an error when a client tries to do that and do not process the request.
       transform: true, // Transforms the request object into a instance of the DTO
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
     }),
   );
 
