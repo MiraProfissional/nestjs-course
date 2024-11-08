@@ -9,7 +9,7 @@ import {
   DefaultValuePipe,
   Patch,
 } from '@nestjs/common';
-import { CreateUserDTO } from './dtos/create-user.dto';
+import { CreateUserDto } from './dtos/create-user.dto';
 import { GetUsersParamDto } from './dtos/get-users-param.dto';
 import { PatchUserDto } from './dtos/patch-user.dto';
 import { UsersService } from './providers/users.service';
@@ -52,8 +52,13 @@ export class UsersController {
   }
 
   @Post()
-  public createUsers(@Body() createUserDto: CreateUserDTO) {
+  public createUsers(@Body() createUserDto: CreateUserDto) {
     return this.usersService.createUser(createUserDto);
+  }
+
+  @Post('create-many')
+  public createManyUsers(@Body() createUserDto: CreateUserDto[]) {
+    return this.usersService.createMany(createUserDto);
   }
 
   @Patch()
