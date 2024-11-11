@@ -21,7 +21,6 @@ import { CreateManyUsersDto } from './dtos/create-many-users.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {} // Injecting Users Service
 
-  @Get('/:id?')
   @ApiOperation({
     summary: 'Fetches a list of registered users on the application',
   })
@@ -44,6 +43,7 @@ export class UsersController {
       'The position of the page number that you want the API to return',
     example: 1,
   })
+  @Get('/:id?')
   public getUsers(
     @Param() getUsersParamDto: GetUsersParamDto,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
