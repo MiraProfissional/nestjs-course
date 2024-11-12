@@ -12,6 +12,7 @@ import { MetaOption } from 'src/meta-options/meta-options.entity';
 import { TagsService } from 'src/tags/providers/tags.service';
 import { PatchPostDto } from '../dtos/patch-post.dto';
 import { GetPostsDto } from '../dtos/get-posts.dto';
+import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
 
 @Injectable()
 export class PostsService {
@@ -26,6 +27,9 @@ export class PostsService {
     private readonly metaOptionsRepository: Repository<MetaOption>,
 
     private readonly tagsService: TagsService,
+
+    //Injecting paginationProvider
+    private readonly paginationProvider: PaginationProvider,
   ) {}
 
   // Creating new posts
@@ -47,10 +51,13 @@ export class PostsService {
   }
 
   public async findAll(postQuery: GetPostsDto, userId: string) {
-    const posts = await this.postsRepository.find({
-      skip: (postQuery.page - 1) * postQuery.limit,
-      take: postQuery.limit,
-    });
+    const posts = await this.paginationProvider.paginateQuery(
+      {
+        limit: postQuery.limit,
+        page: postQuery.page,
+      },
+      this.postsRepository,
+    );
 
     return posts;
   }
