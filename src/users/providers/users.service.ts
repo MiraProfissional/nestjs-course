@@ -17,6 +17,7 @@ import { ConfigType } from '@nestjs/config';
 import profileConfig from '../config/profile.config';
 import { UsersCreateManyProvider } from './users-create-many.provider';
 import { CreateManyUsersDto } from '../dtos/create-many-users.dto';
+import { CreateUserProvider } from './create-user.provider';
 
 /** Class to connect to Users table and perform business operations */
 @Injectable()
@@ -37,50 +38,14 @@ export class UsersService {
 
     // Injecting usersCreateManyProvider
     private readonly usersCreateManyProvider: UsersCreateManyProvider,
+
+    // Inject createUserProvider
+    private readonly createUserProvider: CreateUserProvider,
   ) {}
 
   // Creating function for create users in the database
   public async createUser(createUserDto: CreateUserDto) {
-    let existingUser = undefined;
-
-    try {
-      // Checking if already exist an user with same email
-      existingUser = await this.userRepository.findOne({
-        where: { email: createUserDto.email },
-      });
-    } catch (error) {
-      // Might save the details of the exception
-      // Information which is sensitive
-      throw new RequestTimeoutException(
-        'Unbale to process your request at the moment, please try later.',
-        {
-          description: 'Error connecting to the database.',
-        },
-      );
-    }
-
-    // Handle exception
-    if (existingUser) {
-      throw new BadRequestException(
-        'The user already exists, please check your email.',
-      );
-    }
-
-    // Create a new user
-    let newUser = this.userRepository.create(createUserDto);
-
-    try {
-      newUser = await this.userRepository.save(newUser);
-    } catch (error) {
-      throw new RequestTimeoutException(
-        'Unbale to process your request at the moment, please try later.',
-        {
-          description: 'Error connecting to the database.',
-        },
-      );
-    }
-
-    return newUser;
+    return this.createUserProvider.createUser(createUserDto);
   }
 
   /** The method to get all the users from the database */
