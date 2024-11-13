@@ -2,10 +2,10 @@ POST http://localhost:8000/users
 Content-Type: application/json
 
 {
-    "firstName" : "Mark",
-    "lastName" : "Mira",
-    "email":"MarkMira@email.com",
-    "password":"MarkMira@1"
+    "firstName" : "Geba",
+    "lastName" : "Coelho",
+    "email":"Geba@email.com",
+    "password":"GebaCoelho@1"
 }
 
 POST http://localhost:8000/users/create-many
