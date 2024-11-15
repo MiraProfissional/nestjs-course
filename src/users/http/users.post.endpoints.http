@@ -1,5 +1,6 @@
 POST http://localhost:8000/users
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI1LCJlbWFpbCI6Ik1hcmtNaXJhQGVtYWlsLmNvbSIsImlhdCI6MTczMTY5MTQwOSwiZXhwIjoxNzMxNjk1MDA5LCJhdWQiOiJsb2NhbGhvc3Q6ODAwMCIsImlzcyI6ImxvY2FsaG9zdDo4MDAwIn0.RX-Qo6dK1g1UKMN6_Th0juihIs9EKqvLrMGK5IfVng0
 
 {
     "firstName" : "Geba",

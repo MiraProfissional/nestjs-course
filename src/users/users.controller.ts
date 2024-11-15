@@ -54,9 +54,8 @@ export class UsersController {
     return this.usersService.findAll(getUsersParamDto, limit, page);
   }
 
-  // @SetMetadata('authType', 'None')
-  @Auth(AuthType.None)
   @Post()
+  @Auth(AuthType.None)
   public createUsers(@Body() createUserDto: CreateUserDto) {
     return this.usersService.createUser(createUserDto);
   }
