@@ -1,16 +1,16 @@
 POST http://localhost:8000/posts
 Content-Type: application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI1LCJlbWFpbCI6Ik1hcmtNaXJhQGVtYWlsLmNvbSIsImlhdCI6MTczMTc4MTM2NiwiZXhwIjoxNzMxNzg0OTY2LCJhdWQiOiJsb2NhbGhvc3Q6ODAwMCIsImlzcyI6ImxvY2FsaG9zdDo4MDAwIn0.B7KyumqUHvZL7eqnfE0OF253aB_fTfZIDIoZII2rDsw
 
 {
-    "title":"Test Title",
+    "title":"Test Title 10",
     "postType":"post",
-    "slug":"my-url-10",
+    "slug":"my-url-11",
     "status":"draft",
     "content":"test content",
     "schema":"{\r\n \"@context\": \"https:\/\/schema.org\"}",
     "featuredImageUrl":"http://localhost.com/images/image1.jpg",
     "publishOn": "2024-03-16T07:46:32+00:00",
     "tags": [4],
-    "metaOptions": {"metaValue": "{\"sidebarEnabled\": true,\"footerActive\":true}"},
-    "authorId":1
+    "metaOptions": {"metaValue": "{\"sidebarEnabled\": true,\"footerActive\":true}"}
 }
