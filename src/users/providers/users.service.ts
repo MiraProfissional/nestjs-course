@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { GetUsersParamDto } from '../dtos/get-users-param.dto';
 import { AuthService } from 'src/auth/providers/auth.service';
-import { DataSource, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { User } from '../user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from '../dtos/create-user.dto';
@@ -19,6 +19,7 @@ import { UsersCreateManyProvider } from './users-create-many.provider';
 import { CreateManyUsersDto } from '../dtos/create-many-users.dto';
 import { CreateUserProvider } from './create-user.provider';
 import { FindOneUserByEmailProvider } from './find-one-user-by-email.provider';
+import { FindOneByGoogleIdProvider } from './find-one-by-google-id.provider';
 
 /** Class to connect to Users table and perform business operations */
 @Injectable()
@@ -45,6 +46,8 @@ export class UsersService {
 
     //Inject findOneUserByEmailProvider
     private readonly findOneUserByEmailProvider: FindOneUserByEmailProvider,
+
+    private readonly findOneByGoogleIdProvider: FindOneByGoogleIdProvider,
   ) {}
 
   // Creating function for create users in the database
@@ -80,7 +83,7 @@ export class UsersService {
       user = await this.userRepository.findOneBy({
         id,
       });
-    } catch (error) {
+    } catch {
       throw new RequestTimeoutException(
         'Unbale to process your request at the moment, please try later.',
         {
@@ -103,5 +106,9 @@ export class UsersService {
 
   public async findOneByEmail(email: string) {
     return await this.findOneUserByEmailProvider.findOneByEmail(email);
+  }
+
+  public async findOneByGoogleId(googleId: string) {
+    return await this.findOneByGoogleIdProvider.findOneByGoogleId(googleId);
   }
 }
