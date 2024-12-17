@@ -5,9 +5,11 @@ import { v4 as uuid4 } from 'uuid';
 
 @Injectable()
 export class SaveLocalFilesProvider {
-  private readonly uploadPath = 'photos';
+  private readonly uploadPath = path.join(process.cwd(), 'photos');
 
   public async fileUpload(file: Express.Multer.File): Promise<string> {
+    console.log(this.uploadPath);
+
     try {
       if (!fs.existsSync(this.uploadPath)) {
         fs.mkdirSync(this.uploadPath, { recursive: true });
@@ -15,6 +17,8 @@ export class SaveLocalFilesProvider {
 
       const fileName = this.generateFileName(file);
       const filePath = path.join(this.uploadPath, fileName);
+
+      console.log(`Saving file to: ${filePath}`);
 
       fs.writeFileSync(filePath, file.buffer);
 

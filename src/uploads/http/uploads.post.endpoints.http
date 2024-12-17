@@ -1,0 +1,11 @@
+POST http://localhost:8000/uploads/file
+Content-Type: multipart/form-data; boundary=WebKitFormBoundary
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI1LCJlbWFpbCI6Ik1hcmtNaXJhQGVtYWlsLmNvbSIsImlhdCI6MTczNDM5Mzg5NSwiZXhwIjoxNzM0Mzk3NDk1LCJhdWQiOiJsb2NhbGhvc3Q6ODAwMCIsImlzcyI6ImxvY2FsaG9zdDo4MDAwIn0.C0cTeYqYQM6TUV_eo-jcUoStoKl1InfLwjJGcNokjYg
+
+file
+--WebKitFormBoundary
+Content-Disposition: form-data; name="file";filename="plano-de-fundo-linkedin.png"
+Content-Type: image/png
+
+< ./plano-de-fundo-linkedin.png
+--WebKitFormBoundary--

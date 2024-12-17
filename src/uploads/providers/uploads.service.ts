@@ -28,7 +28,7 @@ export class UploadsService {
   public async uploadFile(file: Express.Multer.File) {
     // Throw error for unsupported MIME types
     if (
-      ['image/gif', 'image/jpeg', 'image/jpg', 'image/png'].includes(
+      !['image/gif', 'image/jpeg', 'image/jpg', 'image/png'].includes(
         file.mimetype,
       )
     ) {
@@ -45,7 +45,7 @@ export class UploadsService {
       // Generate to a new entry in database
       const uploadFile: UploadFile = {
         name: name,
-        path: `photos/${name}`,
+        path: `${name}`,
         type: fileTypes.IMAGE,
         mime: file.mimetype,
         size: file.size,
