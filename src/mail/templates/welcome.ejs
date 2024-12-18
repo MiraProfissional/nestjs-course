@@ -1,15 +1,17 @@
-<p>Dear <%= name %>,</p>
-
-<p>
-    Thanks for signing up for Nice app. We're very excited to have you on board.
-</p>
-
-<p>Here are your account details:</p>
-
-<ul>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome</title>
+</head>
+<body>
+  <h1>Welcome, <%= name %>!</h1>
+  <p>Thanks for signing up for our app.</p>
+  <p>Your account details:</p>
+  <ul>
     <li>Email: <%= email %></li>
-    <li>Login URL: <%= loginUrl %></li>
-</ul>
-
-Thanks!
-Nestjs Blog Support
+    <li>Login URL: <a href="<%= loginUrl %>">Click here to log in</a></li>
+  </ul>
+  <p>Thanks!</p>
+  <p>NestJS Blog Team</p>
+</body>
+</html>
