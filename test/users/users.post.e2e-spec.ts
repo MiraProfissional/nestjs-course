@@ -1,27 +1,14 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { AppModule } from '../../src/app.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { appCreate } from 'src/app.create';
 import { dropDatabase } from 'test/helpers/drop-database.helper';
+import { bootstrapNestApplication } from 'test/helpers/bootstrap-nest-application.helper';
+import { ConfigService } from '@nestjs/config';
 
 describe('[Users] @Post Endpoints', () => {
   let app: INestApplication;
   let config: ConfigService;
 
   beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule, ConfigModule],
-      providers: [ConfigService],
-    }).compile();
-
-    app = moduleFixture.createNestApplication();
-
-    appCreate(app);
-
-    config = app.get<ConfigService>(ConfigService);
-
-    await app.init();
+    app = await bootstrapNestApplication();
   });
 
   afterEach(async () => {
